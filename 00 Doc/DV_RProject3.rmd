@@ -1,0 +1,43 @@
+---
+title: "DV_RProject3"
+author: "Zareen Khayrattee, Kayne Khoury, Juanito Taveras"
+date: "October 14, 2015"
+output: html_document
+---
+
+#Extraction, Transformation, Loading
+To fix our data so it can be loaded into Oracle correctly, we first replaced the periods in our column rows with underscores. 
+
+
+> names(df) <-gsub("\\.+", "_", names(df))
+
+
+We then, set our measures appropriately:
+
+
+> measures <- c("Year", "Deaths_less_than_1_month", "Deaths_1_to_59_months", "Deaths_0_to_4_years") 
+
+
+We created our re-formatted csv, then created our SQL concatenation
+
+
+> tableName <- gsub(" +", "_", gsub("[^A-z, 0-9, ]", "", gsub(".csv", "", file_path)))
+sql <- paste("CREATE TABLE", tableName, "Respiratory_Infections")
+if( length(measures) > 1 || ! is.na(dimensions)) {
+  for(d in dimensions) {
+    sql <- paste(sql, paste(d, "varchar2(4000),\n"))
+  }
+}
+if( length(measures) > 1 || ! is.na(measures)) {
+  for(m in measures) {
+    if(m != tail(measures, n=1)) sql <- paste(sql, paste(m, "number(38,4),\n"))
+    else sql <- paste(sql, paste(m, "number(38,4)\n"))
+  }
+}
+sql <- paste(sql, ");")
+cat(sql)
+
+
+And pasted it into SQL developer. We ran this script, then imported our reformatted CSV to create the table.
+
+----------------
