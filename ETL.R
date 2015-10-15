@@ -3,8 +3,9 @@ require(dplyr)
 require(ggplot2)
 
 
+setwd("/home/juanito/DataVisualization/DV_RProject3/")
 
-file_path <- "infections.csv"
+file_path <- "premature_deaths.csv"
 
 df <- read.csv(file_path, stringsAsFactors = FALSE)
 
