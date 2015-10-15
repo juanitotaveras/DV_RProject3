@@ -1,4 +1,4 @@
-"Country","Year","Deaths_less_than_1_month","Deaths_1_to_59_months","Deaths_0_to_4_years"
+"COUNTRY","YEAR","PREM_1_TO_27_DAYS","PREM_1_TO_59_MONTHS","PREM_TOTAL"
 "Afghanistan","2013","10351","2097","12448"
 "Afghanistan","2012","11060","2196","13256"
 "Afghanistan","2011","11567","2299","13866"
