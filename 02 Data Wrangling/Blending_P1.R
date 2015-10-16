@@ -13,11 +13,12 @@ infections_df <- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/
 trauma_df <- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/native/?query="select * from trauma"'),httpheader=c(DB='jdbc:oracle:thin:@129.152.144.84:1521/PDBF15DV.usuniversi01134.oraclecloud.internal', USER='cs329e_kdk745', PASS='orcl_kdk745', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE), ))
 
 names(fdf);names(sdf);names(tdf)
-join_df <- inner_join(trauma_df, premature_df, by = c("COUNTRY","YEAR"))
+join_df <- inner_join(trauma_df, premature_df, by = c("COUNTRY","YEAR")) %>% arrange(COUNTRY, YEAR) 
 head(join_df)
-join_df_2 <- inner_join(join_df,infections_df,by=c("COUNTRY","YEAR"))
+join_df_2 <- left_join(join_df,infections_df,by=c("COUNTRY","YEAR")) %>% arrange(COUNTRY, YEAR)
 View(join_df_2)
-
+join_df_3 <- right_join(join_df, infections_df, by=c("COUNTRY","YEAR")) %>% arrange(COUNTRY, YEAR)
+View(join_df_3)
 
 colnames(ddf) <- toupper(names(ddf)); dsdf <- inner_join(ddf, sdf, by = "DIAMOND_ID"); inner_join(dsdf, rdf, by = "RETAILER_ID") %>% tbl_df
 
