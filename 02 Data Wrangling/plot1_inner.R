@@ -15,16 +15,10 @@ trauma_df <- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/nati
 names(premature_df);names(infections_df);names(trauma_df)
 join_df <- inner_join(trauma_df, premature_df, by = c("COUNTRY","YEAR")) %>% arrange(COUNTRY, YEAR) 
 View(join_df)
-join_df_2 <- left_join(join_df,infections_df,by=c("COUNTRY","YEAR")) %>% arrange(COUNTRY, YEAR)
-View(join_df_2)
-join_df_3 <- right_join(join_df, infections_df, by=c("COUNTRY","YEAR")) %>% arrange(COUNTRY, YEAR)
-View(join_df_3)
+summary(join_df)
 
-#colnames(ddf) <- toupper(names(ddf)); dsdf <- inner_join(ddf, sdf, by = "DIAMOND_ID"); inner_join(dsdf, rdf, by = "RETAILER_ID") %>% tbl_df
+join_df %>% mutate(Percent_trauma = TRAUMA_0_TO_27_DAYS / TRAUMA_TOTAL, Percent_prem = PREM_0_TO_27_DAYS / PREM_TOTAL) %>% filter(Percent_trauma>=.5 && Percent_prem>=.5) %>% ggplot(aes(x=Percent_prem, y=Percent_trauma, color=YEAR)) + geom_point() + labs(x="PERCENTAGE OF PREMATURITY-CAUSED DEATHS", y="PERCENTAGE OF TRAUMA-CAUSED DEATHS") + labs(title="DEATHS IN BABIES 0 TO 27 DAYS OLD")
 
-c#olnames(ddf) <- toupper(names(ddf)); inner_join(ddf, sdf, by = "DIAMOND_ID") %>% inner_join(., rdf, by = "RETAILER_ID") %>% ggplot(aes(x=CARAT, y = NAME, color = CUT)) + geom_point()
+join_df %>% mutate(Percent_trauma = TRAUMA_0_TO_27_DAYS / TRAUMA_TOTAL, Percent_prem = PREM_0_TO_27_DAYS / PREM_TOTAL) %>% filter(YEAR==2013) %>% ggplot(aes(x=Percent_prem, y=Percent_trauma, color=COUNTRY)) + geom_point() + labs(x="PERCENTAGE OF PREMATURITY-CAUSED DEATHS", y="PERCENTAGE OF TRAUMA-CAUSED DEATHS") + labs(title="DEATHS IN BABIES 0 TO 27 DAYS OLD IN 2013")
 
-#joindf <- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/native/?query="select * from DIAMONDS d join diam_sale s on (d.\\\"diamond_id\\\" = s.diamond_id) join diam_retailer r on (s.retailer_id = r.retailer_id)"'),httpheader=c(DB='jdbc:oracle:thin:@129.152.144.84:1521/PDB1.usuniversi01134.oraclecloud.internal',USER='DV_Diamonds',PASS='orcl',MODE='native_mode',MODEL='model',returnDimensions = 'False',returnFor = 'JSON'),verbose = TRUE))); joindf %>% ggplot(aes(x=carat, y = NAME, color = cut)) + geom_point()
-
-
-
+join_df %>% mutate(Percent_deaths_less_than_one_month = cume_dist(DEATHS_LESS_THAN_1_MONTH)) %>% filter( Percent_deaths_less_than_one_month <=.10 | Percent_deaths_less_than_one_month >= .90) %>% ggplot(aes(x=Percent_deaths_less_than_one_month, y=DEATHS_1_TO_59_MONTHS, color=COUNTRY)) + geom_point() + labs(x="CUMULATIVE DISTRIBUTION OF DEATHS", y="TOTAL DEATHS IN 1 TO 59 MONTHS") + labs(title="DEATHS IN BABIES LESS THAN ONE MONTH OLD")
