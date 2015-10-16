@@ -17,7 +17,6 @@ join_df <- inner_join(trauma_df, premature_df, by = c("COUNTRY","YEAR")) %>% arr
 View(join_df)
 summary(join_df)
 
-
 join_df %>% mutate(Percent_trauma = TRAUMA_0_TO_27_DAYS / TRAUMA_TOTAL, Percent_prem = PREM_0_TO_27_DAYS / PREM_TOTAL) %>% filter(TRAUMA_TOTAL+PREM_TOTAL > 19000) %>% ggplot(aes(x=Percent_prem, y=Percent_trauma, color=COUNTRY)) + geom_point() + facet_wrap(~YEAR) + labs(x="PERCENTAGE OF PREMATURITY-CAUSED DEATHS", y="PERCENTAGE OF TRAUMA-CAUSED DEATHS") + labs(title="DEATHS IN BABIES 0 TO 27 DAYS OLD")
 
 join_df %>% mutate(Percent_trauma = TRAUMA_0_TO_27_DAYS / TRAUMA_TOTAL, Percent_prem = PREM_0_TO_27_DAYS / PREM_TOTAL) %>% filter(TRAUMA_TOTAL+PREM_TOTAL > 19000) %>% ggplot(aes(x=Percent_prem, y=Percent_trauma, color=YEAR)) + geom_point() + facet_wrap(~COUNTRY) + labs(x="PERCENTAGE OF PREMATURITY-CAUSED DEATHS", y="PERCENTAGE OF TRAUMA-CAUSED DEATHS") + labs(title="DEATHS IN BABIES 0 TO 27 DAYS OLD")
