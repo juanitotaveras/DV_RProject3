@@ -67,3 +67,15 @@ In the second graph of this workflow, you can see that it is facet wrapped by Co
 ```{r}
 source("../02 Data Wrangling/plot1_inner.R",echo=TRUE)
 ```
+------------------------------
+
+##Workflow 3
+
+The third workflow was created by blending three data sets together: Worldwide deaths in children under five that died from premature, respiratory, and trauma causes. We then filtered the data to show only deaths from INdia and China, two countries that had remarkably high deaths from respiratory infections.
+
+We can now see that from the year 2000 - 2013 in India, Respiratory and Trauma deaths declined significantly, but premature deaths barely decreased at all. In China though, all three types of deaths declined simulataneously.
+
+You can clearly see that the health issue of premature deaths in India has not been tackled to the extent that respiratory and trauama deaths have, which could be indicative of a societal problem that needs to be addressed immediately. China was able to solve this issue and India was not, which is even more interesting.
+```{r}
+source("../02 Data Wrangling/Blending_P3.R", echo=TRUE)
+```
