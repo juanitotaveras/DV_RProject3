@@ -56,7 +56,7 @@ require("lubridate")
 
 The workflow is designed to explore the effects of prematurity in newborns across the globe.   Our visualization tells us that for countries with more than 100,000 total deaths for all years, the United States had both the highest percentage aged 1-27 days, and the highest percentage that died due to prematuriy. This is a surprising find given contradiction to the commonly held notion that infant mortality rates are the lowest amongst developed, Westernized nations. 
 
-```{r}
+```{r fig.width = 10, fig.height = 6}
 source("../02 Data Wrangling/Blending_P2.R",echo=TRUE)
 ```
 
@@ -70,7 +70,7 @@ In the first graph of this workflow, which is uses facet wrap by year, it's hard
 
 In the second graph of this workflow, you can see that it is facet wrapped by Country. These are the countries where the total deaths were the highest. You can see that some countries, like Turkey and Myanmar, only had a high percentage of Trauma-caused deaths in the early 2000s, and then declined. However, countries like China have had pretty consistently high percentages of trauma and prematurity-caused deaths. As a whole, there seems to be a pattern where prematurity-caused deaths declined, but trauma-caused deaths didn't change as much, which is very interesting.
 
-```{r}
+```{r fig.width=10, fig.height=6}
 source("../02 Data Wrangling/plot1_inner.R",echo=TRUE)
 ```
 ------------------------------
