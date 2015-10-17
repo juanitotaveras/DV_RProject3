@@ -39,12 +39,18 @@ And pasted it into SQL developer. We ran this script, then imported our reformat
 ----------------
 
 ```{r, warning=FALSE, message=FALSE}
+require("ggplot2")
+require("ggthemes")
+require("gplots")
+require("grid")
+require("RCurl")
+require("reshape2")
+require("tableplot")
 require("tidyr")
 require("dplyr")
 require("jsonlite")
-require("RCurl")
-require("reshape2")
-require("ggplot2")
+require("extrafont")
+require("lubridate")
 ```
 ##The effects of prematurity on newborn infants
 
