@@ -10,7 +10,7 @@ trauma_df <- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/nati
 names(premature_df);names(infections_df);names(trauma_df)
 join_df <- inner_join(trauma_df, premature_df, by = c("COUNTRY","YEAR")) %>% arrange(COUNTRY, YEAR) 
 
-summary(join_df)
+#summary(join_df)
 
 join_df %>% mutate(Percent_trauma = TRAUMA_0_TO_27_DAYS / TRAUMA_TOTAL, Percent_prem = PREM_0_TO_27_DAYS / PREM_TOTAL) %>% filter(TRAUMA_TOTAL+PREM_TOTAL > 19000) %>% ggplot(aes(x=Percent_prem, y=Percent_trauma, color=COUNTRY)) + geom_point() + facet_wrap(~YEAR) + labs(x="PERCENTAGE OF PREMATURITY-CAUSED DEATHS", y="PERCENTAGE OF TRAUMA-CAUSED DEATHS") + labs(title="DEATHS IN BABIES 0 TO 27 DAYS OLD")
 

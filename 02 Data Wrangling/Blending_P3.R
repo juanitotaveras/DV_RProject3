@@ -12,13 +12,7 @@ join_df <- full_join(trauma_df, premature_df, by = c("COUNTRY","YEAR")) %>% arra
 join_df_2 <- left_join(join_df,infections_df,by=c("COUNTRY","YEAR")) %>% arrange(COUNTRY, YEAR)
 #View(join_df_2)
 join_df_3 <- right_join(join_df, infections_df, by=c("COUNTRY","YEAR")) %>% arrange(COUNTRY, YEAR)
-#View(join_df_3)
 
-#colnames(ddf) <- toupper(names(ddf)); dsdf <- inner_join(ddf, sdf, by = "DIAMOND_ID"); inner_join(dsdf, rdf, by = "RETAILER_ID") %>% tbl_df
-
-#colnames(ddf) <- toupper(names(ddf)); inner_join(ddf, sdf, by = "DIAMOND_ID") %>% inner_join(., rdf, by = "RETAILER_ID") %>% ggplot(aes(x=CARAT, y = NAME, color = CUT)) + geom_point()
-
-head(join_df_2)
 join_df_2 <- join_df_2 %>% filter(COUNTRY %in% c("India", "China"))
 ggplot() +
   coord_cartesian()+
@@ -26,7 +20,7 @@ ggplot() +
   scale_y_continuous()+
   facet_wrap(~COUNTRY)+
  # scale_fill_manual(labels="legend")+
-  labs(title="Total Infant Deaths in India")+
+  labs(title="Total Infant Deaths in India and China")+ 
   labs(x="YEAR", y="TOTAL DEATHS") +
   labs(color="Type of Death")+
  # scale_fill_discrete(name="Total Infant", labels=c("A", "B"))+
