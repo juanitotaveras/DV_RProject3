@@ -7,17 +7,17 @@ output: html_document
 ---
 
 #Extraction, Transformation, Loading
-```
+
 To fix our data so it can be loaded into Oracle correctly, we first replaced the periods in our column rows with underscores. 
-
+```
 > names(df) <-gsub("\\.+", "_", names(df))
-
+```
 We then, set our measures appropriately:
-
+```
 > measures <- c("Year", "Deaths_less_than_1_month", "Deaths_1_to_59_months", "Deaths_0_to_4_years") 
-
+```
 We created our re-formatted csv, then created our SQL concatenation
-
+```
 > tableName <- gsub(" +", "_", gsub("[^A-z, 0-9, ]", "", gsub(".csv", "", file_path)))
 sql <- paste("CREATE TABLE", tableName, "Respiratory_Infections")
 if( length(measures) > 1 || ! is.na(dimensions)) {
@@ -33,28 +33,37 @@ if( length(measures) > 1 || ! is.na(measures)) {
 }
 sql <- paste(sql, ");")
 cat(sql)
-
+```
 And pasted it into SQL developer. We ran this script, then imported our reformatted CSV to create the table.
-```
-----------------
-##Workflow 1
 
+----------------
+
+```{r, warning=FALSE, message=FALSE}
+require("tidyr")
+require("dplyr")
+require("jsonlite")
+require("RCurl")
+require("reshape2")
+require("ggplot2")
 ```
-The workflow is designed to explore the effects of prematurity in newborns across the globe. The data sets contain total mortality for children under age 5 caused by prematuriy, respiratory infections, and birth trauma or asphyxiation. From this data, we calculated the total mortality for all causes, the percentage aged 1-27 days, and the percentage for prematurity. The results are then filtered to consider countries with more than 100,000 total deaths for all years and causes. Our visualization tells us that the United States has both the highest percentage aged 1-27 days, and the highest percentage for prematuriy. This is a surprising find given the contradiction to the commonly held notion that infant mortality rates are the lowest amongst developed, Westernized nations. 
-```
+##The effects of prematurity on newborn infants
+
+The workflow is designed to explore the effects of prematurity in newborns across the globe.   Our visualization tells us that for countries with more than 100,000 total deaths for all years, the United States had both the highest percentage aged 1-27 days, and the highest percentage that died due to prematuriy. This is a surprising find given contradiction to the commonly held notion that infant mortality rates are the lowest amongst developed, Westernized nations. 
+
 ```{r}
 source("../02 Data Wrangling/Blending_P2.R",echo=TRUE)
 ```
+
 ----------------
 
 ##Workflow 2
-```
-From the data given, we focused these next 2 plots on deaths caused by prematurity and trauma in babies ages 0-27 months. The x-axis, Percentage of Trauma-Caused Deaths, was calculated by taking the number of deaths caused by trauma in babies ages 0-27 months and dividing that by the total number of deaths caused by trauma in children of all ages. The y-axis, Percentage of Prematurity-Caused Deaths, was calculated similarly. The data in both the graphs was filtered by total deaths over 19,000. These 2 graphs are different ways of looking at basically the same data. What they really help focus on is the percentage of the cause of these deaths that occur in babies 0-27 months versus all children under 5 years of age.
 
-In the first graph of this workflow, which is uses facet wrap by year, it's hard to find a pattern.As a whole though, from 2000 to 2013, the deaths seem to go from being conentrated more on the top right portion of the graph, where both percentages of death are highest, to being more evenly distributed and less concentrated. This may signify that as a whole, deaths caused by trauma and prematurity in babies 0-27 months have been on the decline. 
+From the data given, we focused these next 2 plots on deaths caused by prematurity and trauma in babies ages 0-27 days. The x-axis, Percentage of Trauma-Caused Deaths, was calculated by taking the number of deaths caused by trauma in babies ages 0-27 days and dividing that by the total number of deaths caused by trauma in children of all ages. The y-axis, Percentage of Prematurity-Caused Deaths, was calculated similarly. The data in both the graphs was filtered by total deaths over 19,000. These 2 graphs are different ways of looking at basically the same data. What they really help focus on is the percentage of the cause of these deaths that occur in babies 0-27 days versus all children under 5 years of age.
 
-In the second graph of this workflow, you can see that it is facet wrapped by Country. These are the countries where the total deaths were the highest. You can see that soe ounctires, like Turkey and Myanmar, only had a high percentage of Trauma-caused deaths in the early 2000s, and then declined. However, countries like China have had pretty consistently high percentages of trauma and prematurity-caused deaths. As a whole, there seems to be a pattern where prematurity-caused deaths declined, but trauma-caused deaths didn't change as much, which is very interesting.
-```
+In the first graph of this workflow, which is uses facet wrap by year, it's hard to find a pattern.As a whole though, from 2000 to 2013, the deaths seem to go from being conentrated more on the top right portion of the graph, where both percentages of death are highest, to being more evenly distributed and less concentrated. This may signify that as a whole, deaths caused by trauma and prematurity in babies 0-27 days have been on the decline. 
+
+In the second graph of this workflow, you can see that it is facet wrapped by Country. These are the countries where the total deaths were the highest. You can see that some countries, like Turkey and Myanmar, only had a high percentage of Trauma-caused deaths in the early 2000s, and then declined. However, countries like China have had pretty consistently high percentages of trauma and prematurity-caused deaths. As a whole, there seems to be a pattern where prematurity-caused deaths declined, but trauma-caused deaths didn't change as much, which is very interesting.
+
 ```{r}
 source("../02 Data Wrangling/plot1_inner.R",echo=TRUE)
 ```
