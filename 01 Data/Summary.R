@@ -10,7 +10,6 @@ trauma_df <- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/nati
 join_df <- full_join(trauma_df, premature_df, by = c("COUNTRY","YEAR")) %>% arrange(COUNTRY, YEAR) 
 #head(join_df)
 join_df_2 <- left_join(join_df,infections_df,by=c("COUNTRY","YEAR")) %>% arrange(COUNTRY, YEAR)
-#View(join_df_2)
-join_df_3 <- right_join(join_df, infections_df, by=c("COUNTRY","YEAR")) %>% arrange(COUNTRY, YEAR)
 
-summary(join_df_3)
+
+summary(join_df_2)

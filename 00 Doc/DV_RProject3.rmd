@@ -86,14 +86,14 @@ You can clearly see that the health issue of premature deaths in India has not b
 source("../02 Data Wrangling/Blending_P3.R", echo=TRUE)
 ```
 ------------------------------
-##Subset
+##Summary
 ```{r}
 source("../01 Data/Summary.R", echo=TRUE)
 ```
 
 
 -------------------------------
-#Summary
+#Subset
 ```{r}
 source("../01 Data/Subset.R", echo=TRUE)
 ```
