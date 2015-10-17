@@ -88,12 +88,12 @@ source("../02 Data Wrangling/Blending_P3.R", echo=TRUE)
 ------------------------------
 ##Subset
 ```{r}
-source("../01 Data/Summary.R")
+source("../01 Data/Summary.R", echo=TRUE)
 ```
 
 
 -------------------------------
 #Summary
 ```{r}
-source("../01 Data/Subset.R")
+source("../01 Data/Subset.R", echo=TRUE)
 ```
